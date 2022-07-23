@@ -1,0 +1,5 @@
+realsense_visualization:
+  # Publish additional topics for the "aligned_depth_to_color" image.
+  align_depth: true # default: true
+  # Add a pointcloud topic /camera/depth/color/points.
+  filters: pointcloud # default: pointcloud
