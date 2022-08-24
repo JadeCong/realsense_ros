@@ -1,0 +1,30 @@
+<launch>
+    
+    <!-- Parameters configuration -->
+    <arg name="load_config" default="true" doc="Whether load specified configuration parameters." />
+    <arg name="run_rviz" default="true" doc="Whether run rviz node." />
+    <arg name="run_rqt_reconfigure" default="true" doc="Whether run rqt_reconfigure node." />
+    <arg name="align_depth" default="true" doc="Whether publish additional topics for the aligned_depth_to_color image." />
+    <arg name="filters" default="pointcloud" doc="Add a pointcloud topic /camera/depth/color/points." />
+    
+    <group ns="realsense">
+        <!-- Load specified configuration parameters -->
+        <rosparam command="load" file="$(find realsense_reconstruction)/config/realsense_reconstruction.yaml" if="$(arg load_config)" />
+        
+        <!-- Run realsense2_camera node -->
+        <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+            <arg name="align_depth" value="$(arg align_depth)" />
+            <arg name="filters" value="$(arg filters)" />
+        </include>
+        
+        <!-- Run rviz and update robot states -->
+        <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find realsense_reconstruction)/config/realsense_reconstruction.rviz" if="$(arg run_rviz)" />
+        
+        <!-- Run rqt_reconfigure for controller parameters -->
+        <node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" required="false" if="$(arg run_rqt_reconfigure)" />
+        
+        <!-- Run realsense_save_pcd node -->
+        <node name="realsense_save_pcd" pkg="realsense_reconstruction" type="realsense_save_pcd" output="screen" required="true" />
+    </group>
+
+</launch>
