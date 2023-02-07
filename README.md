@@ -7,5 +7,5 @@
 
 ## 2. Package realsense_reconstruction
 
-> 功能：针对不同的应用场景，利用Intel RealSense D435设备进行数据采集，对场景中的操作对象进行三维重建并保存输出PCD点云文件。
+> 功能：针对不同的应用场景，利用Intel RealSense D435设备进行数据采集，对场景中的操作对象进行三维重建并保存输出PCD点云文件。<br>
 > 启动：roslaunch realsense_reconstruction realsense_reconstruction.launch
